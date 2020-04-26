@@ -6,7 +6,7 @@ import org.apache.flink.streaming.api.watermark.Watermark
 
 /**
  * @program: FlinkDemo
- * @description: ${description}
+ * @description: 如何从类型中获得字段
  * @author: Fly.Hugh
  * @create: 2020-03-26 20:40
  **/
@@ -18,7 +18,7 @@ object customwatermark {
 
     val bound: Long = 60 * 1000 // 延时为 1 分钟
 
-    var maxTs: Long = Long.MinValue // 观察到的最大时间戳
+    var maxTs: Long = Long.MinValue // 观察到的最大时间戳 初始化为最小的Long值，然后总是比出较大的那个（也就是最新的时间戳，适合乱序的stream）
 
     override def getCurrentWatermark: Watermark = {
       // 要注意这里使用的是减号
@@ -27,11 +27,10 @@ object customwatermark {
     }
 
     override def extractTimestamp(t: SensorReading, l: Long): Long = {
-      // 确保时间戳总是最大的
+      // 确保时间戳总是最大的 t 就是流的类型，然后从t里面获得时间字段指定
       maxTs = maxTs.max(t.timestamp)
       t.timestamp
     }
-
   }
 
   class PunctuatedAssigner extends AssignerWithPunctuatedWatermarks[SensorReading] {
@@ -52,6 +51,5 @@ object customwatermark {
       t.timestamp
     }
   }
-
 }
 

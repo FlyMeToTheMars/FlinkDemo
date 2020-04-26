@@ -17,7 +17,8 @@ object multipleStreamAPI {
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
 
-    val value = env.readTextFile("C:\\Users\\flyho\\OneDrive\\Flink\\FlinkDemo\\src\\main\\resources\\SensorReading.txt")
+    val value = env
+      .readTextFile("C:\\Users\\flyho\\OneDrive\\Flink\\FlinkDemo\\src\\main\\resources\\SensorReading.txt")
 
     val sensorStream: DataStream[SensorReading] = value.map(
       line => {
@@ -49,7 +50,6 @@ object multipleStreamAPI {
       lowData => (lowData._1, lowData._2, "warning"),
       warningData1 => (warningData1.id, "healthy")
     )
-
         env.execute("mmultipleExample")
 
   }
