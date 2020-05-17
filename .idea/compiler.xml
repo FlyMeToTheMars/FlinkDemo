@@ -9,5 +9,8 @@
         <module name="FlinkDemo" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="FlinkDemo" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>
