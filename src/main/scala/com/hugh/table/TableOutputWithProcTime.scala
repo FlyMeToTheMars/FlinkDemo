@@ -1,6 +1,7 @@
 package com.hugh.table
 
 import com.hugh.api.SensorReading
+import org.apache.flink.streaming.api.TimeCharacteristic
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.table.api.{EnvironmentSettings, Table}
 import org.apache.flink.table.api.scala._
@@ -14,9 +15,13 @@ import org.apache.flink.types.Row
  **/
 object TableOutputWithProcTime {
   def main(args: Array[String]): Unit = {
-    val env = StreamExecutionEnvironment.getExecutionEnvironment
 
-    val inputStream = env.readTextFile("C:\\Users\\flyho\\IdeaProjects\\FlinkDemo\\src\\main\\resources\\SensorReading.txt")
+    val env = StreamExecutionEnvironment.getExecutionEnvironment
+    env.setParallelism(1)
+    env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
+
+    val inputStream = env.readTextFile("C:\\Users\\flyho\\IdeaProjects\\FlinkDemo\\src\\main\\resources\\UserBehavior.csv")
+
     val dataStream: DataStream[SensorReading] = inputStream.map(data => {
       val dataArray = data.split(",")
       SensorReading(dataArray(0), dataArray(1).toLong, dataArray(2).toDouble)

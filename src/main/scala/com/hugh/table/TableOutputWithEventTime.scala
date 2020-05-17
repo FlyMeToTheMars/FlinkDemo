@@ -17,6 +17,7 @@ import org.apache.flink.types.Row
  **/
 object TableOutputWithEventTime {
   def main(args: Array[String]): Unit = {
+
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     env.setParallelism(1)
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
