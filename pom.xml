@@ -12,7 +12,7 @@
         <flink.version>1.10.0</flink.version>
         <flink-redis.version>1.0</flink-redis.version>
         <jedis.version>3.2.0</jedis.version>
-        <mysql.version>8.0.19</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
     </properties>
 
     <dependencies>
